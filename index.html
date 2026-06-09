@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Nirantara Jewels Cart</title>
+<style>
+body{
+font-family:Arial,sans-serif;
+max-width:800px;
+margin:auto;
+padding:20px;
+background:#f8f6f2;
+}
+
+h1{
+text-align:center;
+color:#8B6B3D;
+}
+
+.product{
+border:1px solid #ddd;
+padding:15px;
+margin:15px 0;
+background:white;
+border-radius:10px;
+}
+
+button{
+background:#25D366;
+color:white;
+border:none;
+padding:10px 15px;
+border-radius:5px;
+cursor:pointer;
+}
+
+#cart{
+margin-top:30px;
+padding:20px;
+background:white;
+border-radius:10px;
+}
+
+.whatsapp{
+display:block;
+margin-top:20px;
+text-align:center;
+background:#25D366;
+color:white;
+padding:15px;
+text-decoration:none;
+border-radius:10px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🛍️ Nirantara Jewels Cart</h1>
+
+<div class="product">
+<h3>Ocean Mist Earrings</h3>
+<p>₹129</p>
+<button onclick="addToCart('Ocean Mist Earrings',129)">
+Add to Cart
+</button>
+</div>
+
+<div class="product">
+<h3>Royal Drop Chandbalis</h3>
+<p>₹349</p>
+<button onclick="addToCart('Royal Drop Chandbalis',349)">
+Add to Cart
+</button>
+</div>
+
+<div id="cart">
+<h2>Your Cart</h2>
+<ul id="cartItems"></ul>
+<p><strong>Total: ₹<span id="total">0</span></strong></p>
+
+<a id="waLink"
+class="whatsapp"
+target="_blank">
+Place Order on WhatsApp
+</a>
+</div>
+
+<script>
+let cart=[];
+let total=0;
+
+function addToCart(name,price){
+
+cart.push({name,price});
+total+=price;
+
+document.getElementById('total').innerText=total;
+
+let list=document.getElementById('cartItems');
+let item=document.createElement('li');
+item.innerText=name+" - ₹"+price;
+list.appendChild(item);
+
+updateWhatsapp();
+}
+
+function updateWhatsapp(){
+
+let msg="Hi Nirantara Jewels,%0A%0AI would like to order:%0A";
+
+cart.forEach(item=>{
+msg+=item.name+" - ₹"+item.price+"%0A";
+});
+
+msg+="%0ATotal: ₹"+total;
+
+document.getElementById('waLink').href=
+"https://wa.me/917483923808?text="+msg;
+}
+</script>
+
+</body>
+</html>
