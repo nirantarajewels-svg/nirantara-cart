@@ -61,6 +61,16 @@ items.forEach((item,index)=>{
 msg += (index+1)+". "+item+"%0A";
 });
 
+function clearCart(){
+
+localStorage.removeItem("nirantara");
+
+alert("Your selection has been cleared ✨");
+
+location.reload();
+
+}
+  
 window.location.href="https://wa.me/917483923808?text="+msg;
 
 }
