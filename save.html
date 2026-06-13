@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Save Product</title>
+</head>
+
+<body>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const product = params.get("product");
+
+let items = JSON.parse(localStorage.getItem("nirantara")) || [];
+
+if(product && !items.includes(product)){
+    items.push(product);
+    localStorage.setItem("nirantara", JSON.stringify(items));
+}
+
+document.body.innerHTML = "<h2>Product Saved ❤️</h2><p>You can go back and continue shopping.</p>";
+</script>
+
+</body>
+</html>
