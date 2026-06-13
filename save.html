@@ -53,8 +53,17 @@ localStorage.setItem("nirantara", JSON.stringify(items));
 }
 
 /* auto redirect after 1.5 sec */
+const returnPage = params.get("return");
+
 setTimeout(function(){
-window.location.href="https://www.nirantarajewels.in";
+
+if(returnPage){
+window.location.href = decodeURIComponent(returnPage);
+}
+else{
+window.location.href = "https://www.nirantarajewels.in";
+}
+
 },1500);
 
 </script>
