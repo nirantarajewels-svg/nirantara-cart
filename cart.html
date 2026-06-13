@@ -1,15 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>My Selection</title>
+
+<style>
+body{
+font-family: Arial;
+padding:40px;
+max-width:700px;
+margin:auto;
+}
+
+button{
+background:#25D366;
+color:white;
+border:none;
+padding:15px;
+width:100%;
+font-size:18px;
+cursor:pointer;
+}
+
+li{
+margin:10px 0;
+font-size:18px;
+}
+</style>
+
+</head>
+
+<body>
+
+<h2>My Selected Jewelry 💎</h2>
+
+<ul id="list"></ul>
+
+<button onclick="sendWhatsapp()">Send on WhatsApp</button>
+
+<script>
+
+let items = JSON.parse(localStorage.getItem("nirantara")) || [];
+
+let list = document.getElementById("list");
+
+items.forEach(item => {
+let li = document.createElement("li");
+li.innerText = item;
 list.appendChild(li);
 });
 
 function sendWhatsapp(){
 
-let msg="Hi Nirantara Jewels,%0A%0AI would like to order:%0A%0A";
+let msg = "Hi Nirantara Jewels,%0A%0AI would like to order:%0A%0A";
 
 items.forEach((item,index)=>{
-msg+=(index+1)+". "+item+"%0A";
+msg += (index+1)+". "+item+"%0A";
 });
 
 window.location.href="https://wa.me/917483923808?text="+msg;
+
 }
 
 </script>
