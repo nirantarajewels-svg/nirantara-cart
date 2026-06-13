@@ -1,23 +1,62 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Save Product</title>
+<title>Nirantara Jewels</title>
+
+<style>
+body{
+font-family: Arial;
+text-align:center;
+padding-top:100px;
+background:#faf7f2;
+}
+
+.box{
+max-width:500px;
+margin:auto;
+padding:30px;
+border-radius:12px;
+background:white;
+box-shadow:0 2px 10px rgba(0,0,0,0.08);
+}
+
+h2{
+color:#b8860b;
+}
+
+p{
+font-size:18px;
+color:#555;
+}
+</style>
+
 </head>
 
 <body>
 
+<div class="box">
+<h2>Added to your selection ✨</h2>
+<p>Redirecting you back to continue shopping…</p>
+</div>
+
 <script>
+
 const params = new URLSearchParams(window.location.search);
 const product = params.get("product");
 
 let items = JSON.parse(localStorage.getItem("nirantara")) || [];
 
+/* prevents duplicates */
 if(product && !items.includes(product)){
-    items.push(product);
-    localStorage.setItem("nirantara", JSON.stringify(items));
+items.push(product);
+localStorage.setItem("nirantara", JSON.stringify(items));
 }
 
-document.body.innerHTML = "<h2>Product Saved ❤️</h2><p>You can go back and continue shopping.</p>";
+/* auto redirect after 1.5 sec */
+setTimeout(function(){
+window.location.href="https://nirantarajewels.in";
+},1500);
+
 </script>
 
 </body>
