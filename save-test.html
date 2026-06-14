@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Nirantara Jewels</title>
+
+<style>
+body{
+font-family: Georgia, serif;
+text-align:center;
+padding-top:120px;
+background:#fcfaf7;
+color:#4a4036;
+}
+
+.box{
+max-width:500px;
+margin:auto;
+padding:40px;
+border-radius:18px;
+background:white;
+box-shadow:0 6px 20px rgba(0,0,0,0.08);
+border:1px solid #f1e8da;
+}
+
+h2{
+color:#b08d57;
+font-weight:normal;
+font-size:30px;
+margin-bottom:15px;
+}
+
+p{
+font-size:17px;
+color:#7b6d5f;
+line-height:1.8;
+font-style:italic;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="box">
+<h2>Added to Your Collection ✨</h2>
+<p>This handcrafted piece has been reserved in your curated selection.</p>
+</div>
+
+<script>
+
+/* get URL parameters */
+
+const params = new URLSearchParams(window.location.search);
+const product = params.get("product");
+const price = params.get("price");
+
+/* get existing cart */
+
+let items = JSON.parse(localStorage.getItem("nirantara")) || [];
+
+/* prevent duplicates */
+
+if(product && !items.some(item => item.name === product)){
+
+items.push({
+name: product,
+price: price
+});
+
+localStorage.setItem("nirantara", JSON.stringify(items));
+
+}
+
+/* attempt auto close after 1 second */
+
+setTimeout(function(){
+
+window.close();
+
+},1000);
+
+</script>
+
+</body>
+</html>
