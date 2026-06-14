@@ -53,6 +53,16 @@ font-weight:bold;
 color:#b8860b;
 }
 
+.total-box{
+margin-top:25px;
+padding-top:20px;
+border-top:1px solid #ddd;
+font-size:22px;
+font-weight:bold;
+text-align:right;
+color:#b8860b;
+}
+
 </style>
 </head>
 
@@ -66,6 +76,8 @@ color:#b8860b;
 
 <div id="emptyMessage"></div>
 
+<div id="totalAmount"></div>
+
 <button onclick="sendWhatsapp()">Send on WhatsApp</button>
 
 <button class="clear-btn" onclick="clearCart()">Clear Selection</button>
@@ -78,6 +90,9 @@ let items = JSON.parse(localStorage.getItem("nirantara")) || [];
 
 let list = document.getElementById("list");
 let emptyMessage = document.getElementById("emptyMessage");
+let totalAmount = document.getElementById("totalAmount");
+
+let total = 0;
 
 /* show products */
 
@@ -99,7 +114,15 @@ li.innerHTML = item.name + " — <span class='price'>₹" + item.price + "</span
 
 list.appendChild(li);
 
+/* calculate total */
+
+total += Number(item.price);
+
 });
+
+/* show total */
+
+totalAmount.innerHTML = "<div class='total-box'>Total Amount: ₹" + total + "</div>";
 
 }
 
@@ -123,6 +146,7 @@ msg += (index+1)+". " + item.name + " - ₹" + item.price + "%0A";
 
 });
 
+msg += "%0ATotal Amount: ₹" + total + "%0A";
 msg += "%0APlease share payment details 💎";
 
 window.location.href = "https://wa.me/917483923808?text="+msg;
@@ -145,3 +169,40 @@ location.reload();
 
 </body>
 </html>
+Expected result now
+
+Instead of:
+
+Earrings A — ₹119  
+Earrings B — ₹129
+
+Customer sees:
+
+Your Selected Treasures 💎
+
+• Earrings A — ₹119  
+• Earrings B — ₹129  
+
+------------------------
+Total Amount: ₹248
+
+And WhatsApp message becomes:
+
+Hello Nirantara Jewels,
+
+I would like to order:
+
+1. Earrings A - ₹119
+2. Earrings B - ₹129
+
+Total Amount: ₹248
+
+Please share payment details 💎
+
+Test it with 2–3 products.
+
+Don’t change anything else.
+
+Report back: working / bug / looks weird
+
+Then we move to Recommendation #3 💎🚀
