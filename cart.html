@@ -1,87 +1,137 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Nirantara Cart</title>
+<title>Nirantara Jewels</title>
 
 <style>
 
 body{
-font-family:Arial;
+font-family: Georgia, serif;
 padding:40px;
-max-width:700px;
+max-width:800px;
 margin:auto;
-background:#faf7f2;
+background:#fcfaf7;
+color:#4a4036;
 }
 
 .box{
 background:white;
-padding:30px;
-border-radius:12px;
-box-shadow:0 2px 10px rgba(0,0,0,0.08);
+padding:40px;
+border-radius:18px;
+box-shadow:0 6px 20px rgba(0,0,0,0.08);
+border:1px solid #f1e8da;
+}
+
+h2{
+text-align:center;
+font-size:32px;
+font-weight:normal;
+color:#b08d57;
+margin-bottom:10px;
+}
+
+.subtitle{
+text-align:center;
+font-size:15px;
+color:#8c7b6a;
+margin-bottom:35px;
+font-style:italic;
 }
 
 button{
-background:#25D366;
-color:white;
 border:none;
-padding:15px;
+padding:16px;
 width:100%;
-font-size:18px;
+font-size:17px;
 cursor:pointer;
-margin-top:15px;
-border-radius:8px;
+margin-top:18px;
+border-radius:10px;
+transition:0.3s ease;
+font-family: Arial;
+}
+
+.whatsapp-btn{
+background:#b08d57;
+color:white;
+}
+
+.whatsapp-btn:hover{
+opacity:0.9;
 }
 
 .clear-btn{
-background:#d9534f;
+background:#eee6db;
+color:#6d5d4b;
+}
+
+.clear-btn:hover{
+background:#e4d7c6;
 }
 
 li{
-margin:15px 0;
-font-size:18px;
+list-style:none;
+margin:18px 0;
+padding:18px;
+background:#faf7f2;
+border-radius:12px;
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:10px 0;
-border-bottom:1px solid #eee;
+border:1px solid #f0e5d6;
 }
 
-.empty{
-text-align:center;
-color:gray;
+.item-row{
+flex-grow:1;
 font-size:18px;
-padding:20px;
+line-height:1.6;
 }
 
 .price{
 font-weight:bold;
 color:#b8860b;
-}
-
-.total-box{
-margin-top:25px;
-padding-top:20px;
-border-top:1px solid #ddd;
-font-size:22px;
-font-weight:bold;
-text-align:right;
-color:#b8860b;
+font-size:19px;
 }
 
 .remove-btn{
-background:#d9534f;
-color:white;
+background:#f8efe4;
+color:#9c7a45;
 border:none;
-padding:6px 12px;
-border-radius:6px;
+padding:8px 14px;
+border-radius:8px;
 cursor:pointer;
 font-size:14px;
 width:auto;
-margin-left:15px;
+margin-left:20px;
 }
 
-.item-row{
-flex-grow:1;
+.remove-btn:hover{
+background:#f2e3d1;
+}
+
+.total-box{
+margin-top:30px;
+padding-top:20px;
+border-top:1px solid #e8dccb;
+font-size:24px;
+font-weight:bold;
+text-align:right;
+color:#b08d57;
+}
+
+.empty{
+text-align:center;
+color:#999;
+font-size:18px;
+padding:20px;
+}
+
+.footer-note{
+text-align:center;
+margin-top:25px;
+font-size:14px;
+font-style:italic;
+color:#8c7b6a;
+line-height:1.8;
 }
 
 </style>
@@ -91,7 +141,11 @@ flex-grow:1;
 
 <div class="box">
 
-<h2>Your Selected Treasures 💎</h2>
+<h2>Your Curated Collection ✨</h2>
+
+<p class="subtitle">
+Each Nirantara piece is thoughtfully crafted to bring timeless elegance to your collection.
+</p>
 
 <ul id="list"></ul>
 
@@ -99,9 +153,17 @@ flex-grow:1;
 
 <div id="totalAmount"></div>
 
-<button onclick="sendWhatsapp()">Send on WhatsApp</button>
+<button class="whatsapp-btn" onclick="sendWhatsapp()">
+Reserve on WhatsApp ✨
+</button>
 
-<button class="clear-btn" onclick="clearCart()">Clear Selection</button>
+<button class="clear-btn" onclick="clearCart()">
+Reset Collection
+</button>
+
+<div class="footer-note">
+Handcrafted with elegance, made to stay timeless 💎
+</div>
 
 </div>
 
@@ -125,7 +187,9 @@ let total = 0;
 
 if(items.length === 0){
 
-emptyMessage.innerHTML = "<p class='empty'>No products selected yet ✨</p>";
+emptyMessage.innerHTML =
+"<p class='empty'>No treasures selected yet ✨</p>";
+
 return;
 
 }
@@ -136,7 +200,8 @@ let li = document.createElement("li");
 
 li.innerHTML = `
 <div class="item-row">
-${item.name} — <span class="price">₹${item.price}</span>
+${item.name}<br>
+<span class="price">₹${item.price}</span>
 </div>
 
 <button class="remove-btn" onclick="removeItem(${index})">✕</button>
@@ -153,7 +218,7 @@ totalAmount.innerHTML =
 
 }
 
-/* remove single item */
+/* remove item */
 
 function removeItem(index){
 
@@ -179,7 +244,7 @@ return;
 
 let total = 0;
 
-let msg = "✨ Hello Nirantara Jewels,%0A%0AI would like to order:%0A%0A";
+let msg = "✨ Hello Nirantara Jewels,%0A%0AI would like to reserve:%0A%0A";
 
 items.forEach((item,index)=>{
 
@@ -190,9 +255,10 @@ total += Number(item.price);
 });
 
 msg += "%0ATotal Amount: ₹" + total + "%0A";
-msg += "%0APlease share payment details 💎";
+msg += "%0ALooking forward to hearing from you 💎";
 
-window.location.href = "https://wa.me/917483923808?text="+msg;
+window.location.href =
+"https://wa.me/917483923808?text="+msg;
 
 }
 
@@ -202,13 +268,13 @@ function clearCart(){
 
 localStorage.removeItem("nirantara");
 
-alert("Your selection has been cleared ✨");
+alert("Your curated collection has been reset ✨");
 
 location.reload();
 
 }
 
-/* initial load */
+/* load */
 
 renderCart();
 
