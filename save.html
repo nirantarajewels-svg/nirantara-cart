@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 <title>Nirantara Jewels</title>
 
@@ -41,14 +42,22 @@ color:#555;
 
 <script>
 
+/* read URL parameters */
 const params = new URLSearchParams(window.location.search);
 const product = params.get("product");
+const price = params.get("price");
 
+/* get existing cart */
 let items = JSON.parse(localStorage.getItem("nirantara")) || [];
 
 /* prevent duplicates */
-if(product && !items.includes(product)){
-items.push(product);
+if(product && !items.some(item => item.name === product)){
+
+items.push({
+name: product,
+price: price
+});
+
 localStorage.setItem("nirantara", JSON.stringify(items));
 }
 
