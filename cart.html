@@ -37,8 +37,13 @@ background:#d9534f;
 }
 
 li{
-margin:12px 0;
+margin:15px 0;
 font-size:18px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:10px 0;
+border-bottom:1px solid #eee;
 }
 
 .empty{
@@ -61,6 +66,22 @@ font-size:22px;
 font-weight:bold;
 text-align:right;
 color:#b8860b;
+}
+
+.remove-btn{
+background:#d9534f;
+color:white;
+border:none;
+padding:6px 12px;
+border-radius:6px;
+cursor:pointer;
+font-size:14px;
+width:auto;
+margin-left:15px;
+}
+
+.item-row{
+flex-grow:1;
 }
 
 </style>
@@ -92,41 +113,59 @@ let list = document.getElementById("list");
 let emptyMessage = document.getElementById("emptyMessage");
 let totalAmount = document.getElementById("totalAmount");
 
-let total = 0;
+/* render cart */
 
-/* show products */
+function renderCart(){
+
+list.innerHTML = "";
+emptyMessage.innerHTML = "";
+totalAmount.innerHTML = "";
+
+let total = 0;
 
 if(items.length === 0){
 
 emptyMessage.innerHTML = "<p class='empty'>No products selected yet ✨</p>";
+return;
 
 }
 
-else{
-
-items.forEach(item => {
+items.forEach((item,index)=>{
 
 let li = document.createElement("li");
 
-/* show product + price */
+li.innerHTML = `
+<div class="item-row">
+${item.name} — <span class="price">₹${item.price}</span>
+</div>
 
-li.innerHTML = item.name + " — <span class='price'>₹" + item.price + "</span>";
+<button class="remove-btn" onclick="removeItem(${index})">✕</button>
+`;
 
 list.appendChild(li);
-
-/* calculate total */
 
 total += Number(item.price);
 
 });
 
-/* show total */
-
-totalAmount.innerHTML = "<div class='total-box'>Total Amount: ₹" + total + "</div>";
+totalAmount.innerHTML =
+"<div class='total-box'>Total Amount: ₹" + total + "</div>";
 
 }
 
-/* whatsapp function */
+/* remove single item */
+
+function removeItem(index){
+
+items.splice(index,1);
+
+localStorage.setItem("nirantara", JSON.stringify(items));
+
+renderCart();
+
+}
+
+/* whatsapp */
 
 function sendWhatsapp(){
 
@@ -138,11 +177,15 @@ return;
 
 }
 
+let total = 0;
+
 let msg = "✨ Hello Nirantara Jewels,%0A%0AI would like to order:%0A%0A";
 
 items.forEach((item,index)=>{
 
 msg += (index+1)+". " + item.name + " - ₹" + item.price + "%0A";
+
+total += Number(item.price);
 
 });
 
@@ -165,44 +208,11 @@ location.reload();
 
 }
 
+/* initial load */
+
+renderCart();
+
 </script>
 
 </body>
 </html>
-Expected result now
-
-Instead of:
-
-Earrings A — ₹119  
-Earrings B — ₹129
-
-Customer sees:
-
-Your Selected Treasures 💎
-
-• Earrings A — ₹119  
-• Earrings B — ₹129  
-
-------------------------
-Total Amount: ₹248
-
-And WhatsApp message becomes:
-
-Hello Nirantara Jewels,
-
-I would like to order:
-
-1. Earrings A - ₹119
-2. Earrings B - ₹129
-
-Total Amount: ₹248
-
-Please share payment details 💎
-
-Test it with 2–3 products.
-
-Don’t change anything else.
-
-Report back: working / bug / looks weird
-
-Then we move to Recommendation #3 💎🚀
