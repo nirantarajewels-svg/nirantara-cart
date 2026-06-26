@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nirantara Reviews</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+background:#FAF7F2;
+font-family:'Inter', sans-serif;
+color:#2E2A28;
+line-height:1.6;
+padding:40px 20px;
+}
+
+.container{
+max-width:1100px;
+margin:auto;
+}
+
+.hero{
+text-align:center;
+margin-bottom:60px;
+}
+
+.hero h1{
+font-family:'Cormorant Garamond', serif;
+font-size:3.2rem;
+font-weight:600;
+margin-bottom:15px;
+letter-spacing:0.5px;
+}
+
+.hero p{
+max-width:650px;
+margin:auto;
+font-size:1rem;
+color:#6E625B;
+margin-bottom:25px;
+}
+
+.live-counter{
+display:inline-block;
+padding:10px 20px;
+border:1px solid #E8DED2;
+border-radius:40px;
+font-size:0.95rem;
+background:white;
+}
+
+.stats{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:20px;
+margin-bottom:70px;
+}
+
+.stat-card{
+background:white;
+padding:25px;
+border:1px solid #E8DED2;
+text-align:center;
+}
+
+.stat-card h2{
+font-size:2rem;
+font-family:'Cormorant Garamond', serif;
+font-weight:500;
+margin-bottom:8px;
+}
+
+.stat-card p{
+font-size:0.9rem;
+color:#7A6D65;
+}
+
+.trust-strip{
+display:flex;
+justify-content:center;
+gap:30px;
+margin-bottom:60px;
+font-size:0.95rem;
+color:#7A6D65;
+flex-wrap:wrap;
+}
+
+.reviews-container{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:30px;
+margin-bottom:50px;
+}
+
+.review-card{
+background:white;
+padding:30px;
+border:1px solid #E8DED2;
+transition:0.3s ease;
+}
+
+.review-card:hover{
+transform:translateY(-4px);
+}
+
+.stars{
+font-size:1.2rem;
+margin-bottom:15px;
+}
+
+.name{
+font-weight:500;
+margin-bottom:18px;
+font-size:1rem;
+}
+
+.review-text{
+font-size:0.95rem;
+color:#4D433D;
+margin-bottom:20px;
+}
+
+.verified{
+font-size:0.85rem;
+color:#9A8D84;
+}
+
+.load-more{
+display:block;
+margin:auto;
+padding:12px 28px;
+background:none;
+border:1px solid #C8A96B;
+cursor:pointer;
+font-size:0.95rem;
+transition:0.3s;
+}
+
+.load-more:hover{
+background:#C8A96B;
+color:white;
+}
+
+.footer-message{
+text-align:center;
+margin-top:80px;
+font-size:1rem;
+color:#7A6D65;
+}
+
+@media(max-width:768px){
+
+.hero h1{
+font-size:2.2rem;
+}
+
+.stats{
+grid-template-columns:1fr;
+}
+
+.reviews-container{
+grid-template-columns:1fr;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="hero">
+<h1>From Our Customers, With Love ✨</h1>
+
+<p>
+Every review shared here comes directly from customers who chose Nirantara and is displayed exactly as received.
+</p>
+
+<div class="live-counter" id="customerCount">
+Trusted by Customers and Growing 💛
+</div>
+</div>
+
+
+<div class="stats">
+
+<div class="stat-card">
+<h2 id="reviewCount">0</h2>
+<p>Reviews</p>
+</div>
+
+<div class="stat-card">
+<h2 id="avgRating">0.0</h2>
+<p>Average Rating</p>
+</div>
+
+<div class="stat-card">
+<h2 id="shopAgain">0%</h2>
+<p>Would Shop Again</p>
+</div>
+
+</div>
+
+
+<div class="trust-strip">
+<span>Loved for Quality</span>
+<span>Trusted for Packaging</span>
+<span>Chosen for Affordability</span>
+</div>
+
+
+<div class="reviews-container" id="reviewsContainer">
+
+<!-- Reviews will come here automatically -->
+
+</div>
+
+<button class="load-more" id="loadMoreBtn">
+View More Reviews
+</button>
+
+
+<div class="footer-message">
+Thank you for growing with us 💛
+</div>
+
+</div>
+
+</body>
+</html>
