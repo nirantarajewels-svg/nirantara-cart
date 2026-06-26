@@ -1,14 +1,17 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Customer Reviews | Nirantara Jewels</title>
+<title>From Our Customers | Nirantara Jewels</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 
 <style>
 
@@ -38,14 +41,14 @@ margin-bottom:70px;
 
 .hero h1{
 font-family:'Cormorant Garamond',serif;
-font-size:3.3rem;
+font-size:3.4rem;
 font-weight:600;
 margin-bottom:18px;
-letter-spacing:0.4px;
+letter-spacing:0.3px;
 }
 
 .hero p{
-max-width:720px;
+max-width:760px;
 margin:auto;
 font-size:1rem;
 color:#6D615B;
@@ -117,7 +120,7 @@ transform:translateY(-4px);
 }
 
 .stars{
-font-size:1.15rem;
+font-size:1.1rem;
 margin-bottom:16px;
 letter-spacing:2px;
 }
@@ -197,9 +200,7 @@ padding:25px;
 
 <div class="hero">
 
-<h1>
-From Our Customers, With Love ✨
-</h1>
+<h1>From Our Customers, With Love ✨</h1>
 
 <p>
 Every review shared here comes directly from customers who chose Nirantara and is displayed exactly as received.
@@ -210,7 +211,6 @@ Trusted by Customers and Growing 💛
 </div>
 
 </div>
-
 
 <div class="stats">
 
@@ -231,37 +231,192 @@ Trusted by Customers and Growing 💛
 
 </div>
 
-
 <div class="trust-strip">
-
 <span>Loved for Quality</span>
-
 <span>Trusted for Packaging</span>
-
 <span>Chosen for Affordability</span>
-
 </div>
 
-
-<div class="reviews-container" id="reviewsContainer">
-
-<!-- Dynamic reviews here -->
-
-</div>
-
+<div class="reviews-container" id="reviewsContainer"></div>
 
 <button class="load-more" id="loadMoreBtn">
 View More Reviews
 </button>
 
-
 <div class="footer-message">
-
 Thank you for growing with us 💛
+</div>
 
 </div>
 
-<!-- PART 2 will come here -->
+<script>
+
+const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTE4PpGOHvmfvkIKuLMnN43q7u5CaJHAW3sxaz_eH4QpY-z11TVYuRqigAwykBGKBnYlyr0K3hy-1if/pub?output=csv";
+
+let allReviews = [];
+let visibleReviews = 6;
+
+function fetchReviews(){
+
+Papa.parse(SHEET_URL, {
+
+download: true,
+header: false,
+
+complete: function(results){
+
+processData(results.data);
+
+}
+
+});
+
+}
+
+function processData(data){
+
+allReviews = [];
+
+const rows = data.slice(1);
+
+rows.forEach(row => {
+
+if(row.length >= 4){
+
+const review = {
+
+name: row[0] ? row[0].trim() : "",
+
+rating: parseFloat(row[1]) || 5,
+
+comment: row[2] ? row[2].trim() : "",
+
+shopAgain:
+row[3] &&
+(
+row[3].toLowerCase().includes("yes") ||
+row[3].toLowerCase().includes("definitely")
+)
+
+};
+
+if(review.comment){
+
+allReviews.push(review);
+
+}
+
+}
+
+});
+
+allReviews.reverse();
+
+renderReviews();
+
+updateStats();
+
+}
+
+function renderReviews(){
+
+const container =
+document.getElementById("reviewsContainer");
+
+container.innerHTML = "";
+
+const reviewsToShow =
+allReviews.slice(0, visibleReviews);
+
+reviewsToShow.forEach(review => {
+
+const fullStars =
+"★".repeat(Math.round(review.rating));
+
+const card =
+document.createElement("div");
+
+card.className = "review-card";
+
+card.innerHTML = `
+
+<div class="stars">${fullStars}</div>
+
+<div class="name">${review.name}</div>
+
+<div class="review-text">
+${review.comment}
+</div>
+
+<div class="verified">
+Verified Purchase
+</div>
+
+`;
+
+container.appendChild(card);
+
+});
+
+if(visibleReviews >= allReviews.length){
+
+document.getElementById("loadMoreBtn")
+.style.display = "none";
+
+}
+
+}
+
+function updateStats(){
+
+const totalReviews =
+allReviews.length;
+
+document.getElementById("reviewCount")
+.innerText = totalReviews;
+
+const avg =
+(
+allReviews.reduce(
+(sum,r) => sum + r.rating, 0
+) / totalReviews
+).toFixed(1);
+
+document.getElementById("avgRating")
+.innerText = avg;
+
+const shopAgainCount =
+allReviews.filter(
+review => review.shopAgain
+).length;
+
+const percentage =
+Math.round(
+(shopAgainCount / totalReviews) * 100
+);
+
+document.getElementById("shopAgain")
+.innerText = percentage + "%";
+
+document.getElementById("customerCount")
+.innerText =
+`Trusted by ${totalReviews}+ Customers and Growing 💛`;
+
+}
+
+document.getElementById("loadMoreBtn")
+.addEventListener("click", function(){
+
+visibleReviews += 6;
+
+renderReviews();
+
+});
+
+fetchReviews();
+
+</script>
 
 </body>
 </html>
+```
